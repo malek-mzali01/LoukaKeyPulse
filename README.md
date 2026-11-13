@@ -15,10 +15,19 @@ Copyright (c) 2026 Malek Mzali (Louka). All rights reserved. Free to use, not fr
 - Hides to the system tray on close. Right-click the tray icon for Show and Quit.
 - Only one copy can run at a time. Starting a second copy brings the first one back.
 - Automatic updates: the app checks GitHub Releases, shows the changelog, and lets you choose Update now, Later or Skip this version.
-- WoW chat detection: while the chat box is open, repeating pauses so your keys type normally.
-  - The chat flag lives at a different memory address in every client build, so you calibrate each build once with the Chat flag button.
-  - Calibrations are saved per build. The hamburger button next to it lists them and lets you recalibrate or delete one.
-  - Memory is only read, never written, and only from WoW processes.
+- WoW chat detection: pauses auto-fire while you type in chat, so your messages aren't filled with repeated keys.
+  - Each WoW client build stores the chat state at a different memory address, so you set it up once per build with the Chat flag button.
+  - Your setups are saved per build. The menu button next to it lets you redo or delete one.
+  - The tool only reads WoW's memory. It never changes it, and it never touches other programs.
+
+## Screenshots
+
+### Main window
+![Main window](screenshots/mainwindow.png)
+### Profiles
+![Profiles](screenshots/profile.png)
+### Calibrated builds
+![Calibrated builds](screenshots/calibratedbuilds.png)
 
 ## Requirements
 
@@ -41,10 +50,8 @@ python -m loukakeypulse
 The app uses only the Python standard library.
 
 ## Build the exe
-
-1. Put your `icon.ico` next to `main.py` (optional).
-2. Run `build.bat`.
-3. Your build is in `dist\LoukaKeyPulse.exe`.
+1. Run `build.bat`.
+2. Your build is in `dist\LoukaKeyPulse.exe`.
 
 The build settings are at the top of `LoukaKeyPulse.spec`:
 
