@@ -1,0 +1,63 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    env:
+      DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check that the tag matches the app version
+        shell: pwsh
+        run: |
+          $v = python -c "import loukakeypulse; print(loukakeypulse.__version__)"
+          if ("v$v" -ne "${{ github.ref_name }}") {
+            Write-Error "Tag ${{ github.ref_name }} does not match __version__ $v"
+            exit 1
+          }
+
+      - name: Install build tools
+        run: pip install -r requirements.txt
+
+      - name: Generate version info
+        run: python tools/gen_version_info.py
+
+      - name: Build the exe
+        run: pyinstaller --clean --noconfirm LoukaKeyPulse.spec
+
+      - name: Create the checksum
+        shell: pwsh
+        run: |
+          $h = (Get-FileHash dist\LoukaKeyPulse.exe -Algorithm SHA256).Hash.ToLower()
+          "$h  LoukaKeyPulse.exe" | Out-File -Encoding ascii dist\LoukaKeyPulse.exe.sha256
+
+      - name: Extract the release notes
+        run: python tools/release_notes.py ${{ github.ref_name }} release_notes.md
+
+      - name: Publish the release
+        uses: softprops/action-gh-release@v2
+        with:
+          body_path: release_notes.md
+          files: |
+            dist/LoukaKeyPulse.exe
+            dist/LoukaKeyPulse.exe.sha256
+
+      - name: Announce on Discord
+        if: ${{ env.DISCORD_WEBHOOK != '' }}
+        shell: pwsh
+        run: |
+          $body = @{ content = "LoukaKeyPulse ${{ github.ref_name }} is out: https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}" } | ConvertTo-Json
+          Invoke-RestMethod -Uri $env:DISCORD_WEBHOOK -Method Post -ContentType "application/json" -Body $body
