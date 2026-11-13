@@ -131,7 +131,7 @@ class App(
 
         gh.bind(
             "<Button-1>",
-            lambda e: webbrowser.open("https://github.com/Malek-Mzali")
+            lambda e: webbrowser.open("https://github.com/malek-mzali01/LoukaKeyPulse")
         )
         gh.bind("<Enter>", lambda e: gh.configure(fg="#a08fff"))
         gh.bind("<Leave>", lambda e: gh.configure(fg=ACC))
