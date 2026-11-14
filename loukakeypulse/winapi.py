@@ -111,6 +111,19 @@ u32.SetWindowsHookExW.argtypes = [
 ]
 u32.SetWindowsHookExW.restype = ctypes.c_void_p
 
+u32.UnhookWindowsHookEx.argtypes = [ctypes.c_void_p]
+u32.UnhookWindowsHookEx.restype = W.BOOL
+u32.PeekMessageW.argtypes = [
+    ctypes.POINTER(W.MSG), W.HWND, W.UINT, W.UINT, W.UINT
+]
+u32.PeekMessageW.restype = W.BOOL
+u32.MsgWaitForMultipleObjects.argtypes = [
+    W.DWORD, ctypes.c_void_p, W.BOOL, W.DWORD, W.DWORD
+]
+u32.MsgWaitForMultipleObjects.restype = W.DWORD
+PM_REMOVE = 0x0001
+QS_ALLINPUT = 0x04FF
+
 gdi = ctypes.WinDLL("gdi32", use_last_error=True)
 shl = ctypes.WinDLL("shell32", use_last_error=True)
 

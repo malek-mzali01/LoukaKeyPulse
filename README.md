@@ -15,11 +15,10 @@ Copyright (c) 2026 Malek Mzali (Louka). All rights reserved. Free to use, not fr
 - Hides to the system tray on close. Right-click the tray icon for Show and Quit.
 - Only one copy can run at a time. Starting a second copy brings the first one back.
 - Automatic updates: the app checks GitHub Releases, shows the changelog, and lets you choose Update now, Later or Skip this version.
-- WoW chat detection: pauses auto-fire while you type in chat, so your messages aren't filled with repeated keys.
-  - Each WoW client build stores the chat state at a different memory address, so you set it up once per build with the Chat flag button.
-  - Your setups are saved per build. The menu button next to it lets you redo or delete one.
+- **WoW chat pause:** auto-fire stops by itself while you type in chat, so your messages come out normally.
+  - Each WoW client build needs a one-time setup with the **Calibrate** button. Your setups are saved per build.
+  - The menu button next to it lets you redo or delete a saved setup.
   - The tool only reads WoW's memory. It never changes it, and it never touches other programs.
-
 ## Screenshots
 
 ### Main window
