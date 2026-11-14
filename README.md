@@ -73,17 +73,6 @@ The build settings are at the top of `LoukaKeyPulse.spec`:
 - Right-click the tray icon and choose Check for updates to check on demand.
 - Downloads are only accepted from github.com hosts over HTTPS.
 
-## Releasing a new version
-
-1. Change `__version__` in `loukakeypulse/__init__.py`, for example to `1.1.0`.
-2. Add a `## [1.1.0] - date` section to `CHANGELOG.md`. Its text becomes the release notes and the changelog users see.
-3. Commit, then create and push the tag:
-
-```
-git tag v1.1.0
-git push origin v1.1.0
-```
-
 4. The workflow in `.github/workflows/release.yml` builds `LoukaKeyPulse.exe`, creates its `.sha256` file, publishes the GitHub release with your notes, and posts to Discord if a webhook is configured.
 
 One-time setup: set `GITHUB_REPO` in `loukakeypulse/updater.py` to your repository, make sure the releases are public, and optionally add a Discord webhook URL as a repository secret named `DISCORD_WEBHOOK`.
